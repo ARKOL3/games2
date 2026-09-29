@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tools | Vertex</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Unbounded:wght@700;800&display=swap" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/index.html"><span class="brand-mark" aria-hidden="true"></span>Vertex</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/projects.html">Games</a>
+        <a href="/misc.html" aria-current="page">Tools</a>
+      </nav>
+    </header>
+    <main class="page page-narrow">
+      <h1 class="page-title">Tools and settings</h1>
+
+      <section class="panel">
+        <h2>about:blank</h2>
+        <p>Enter a URL to open it in an about:blank page. Some websites will not load this way.</p>
+        <input id="url-target" class="field" type="url" placeholder="Enter a website URL" autocomplete="on" aria-label="Website URL" />
+        <div class="button-row">
+          <button id="create" class="btn btn-primary btn-small" type="button">Create page</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Tab cloaker</h2>
+        <p>Set a new tab title or icon image URL. It applies to the whole site.</p>
+        <input id="userinput" class="field" type="text" placeholder="Enter a title or image URL" autocomplete="on" aria-label="Tab title or icon URL" />
+        <p id="console-output" class="msg" role="status"></p>
+        <div class="button-row">
+          <button class="btn btn-primary btn-small" type="button" onclick="changeTabTitle();">Set title</button>
+          <button class="btn btn-small" type="button" onclick="changeTabIcon();">Set icon</button>
+          <button class="btn btn-small" type="button" onclick="resetTabSettings();">Reset</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Ads</h2>
+        <p>Ads help support the site. If they slow things down, you can turn them off.</p>
+        <label class="check" for="adConsent">
+          <input type="checkbox" id="adConsent" name="adConsent" />
+          Do not show ads
+        </label>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>Vertex is built on <a href="https://github.com/3kh0/3kh0-lite">3kh0-lite</a> by 3kh0, used with credit.</p>
+    </footer>
+    <script src="/js/misc.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

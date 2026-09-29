@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Games | Vertex</title>
+    <meta name="description" content="Browse and search the Vertex game library." />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Unbounded:wght@700;800&display=swap" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/index.html"><span class="brand-mark" aria-hidden="true"></span>Vertex</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/projects.html" aria-current="page">Games</a>
+        <a href="/misc.html">Tools</a>
+      </nav>
+    </header>
+    <main class="page">
+      <h1 class="page-title">Games</h1>
+      <input type="search" id="search" class="search" placeholder="Search games" aria-label="Search games" autocomplete="off" />
+      <div id="loader" class="loader" role="status" aria-label="Loading games"></div>
+      <div id="game-container" class="game-grid"></div>
+    </main>
+    <button id="back-to-top" class="btn btn-primary btn-small to-top" type="button">Back to top</button>
+    <footer class="site-footer">
+      <p>Vertex is built on <a href="https://github.com/3kh0/3kh0-lite">3kh0-lite</a> by 3kh0, used with credit.</p>
+    </footer>
+    <script src="/js/main.js"></script>
+    <script>
+      let games = [];
+      const container = document.getElementById("game-container");
+      const loader = document.getElementById("loader");
+      const search = document.getElementById("search");
+
+      function render(list) {
+        container.textContent = "";
+        if (!list.length) {
+          const empty = document.createElement("p");
+          empty.className = "empty";
+          empty.textContent = "No games match that search. Try a shorter name.";
+          container.appendChild(empty);
+          return;
+        }
+        list.forEach((project) => {
+          const card = document.createElement("a");
+          card.className = "game";
+          card.href = project.link;
+
+          const img = document.createElement("img");
+          img.className = "game-img";
+          img.src = project.imgSrc;
+          img.alt = "";
+          img.loading = "lazy";
+
+          const title = document.createElement("span");
+          title.className = "game-title";
+          title.textContent = project.title;
+
+          card.append(img, title);
+          container.appendChild(card);
+        });
+      }
+
+      fetch("config/games.json")
+        .then((response) => response.json())
+        .then((data) => {
+          games = data;
+          render(games);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          container.innerHTML = '<p class="empty">Games could not be loaded. Refresh the page to try again.</p>';
+        })
+        .finally(() => { loader.style.display = "none"; });
+
+      search.addEventListener("input", () => {
+        const filter = search.value.trim().toUpperCase();
+        render(games.filter((game) => game.title.toUpperCase().includes(filter)));
+      });
+
+      const backToTop = document.getElementById("back-to-top");
+      window.addEventListener("scroll", () => {
+        backToTop.style.display = window.scrollY > 100 ? "block" : "none";
+      });
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0 }));
+    </script>
+  </body>
+</html>
